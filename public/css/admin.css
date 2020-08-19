@@ -1,0 +1,45 @@
+form {
+    width: 500px;
+    margin: auto;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    color: green;
+    width: 150px;
+}
+
+.btn {
+    display: flex;
+    width: 60px;
+    padding: 1px;
+    /* margin: 1px; */
+    text-align: center;
+}
+
+td,
+img {
+    width: 100px;
+}
+
+.container {
+    display: flex;
+    max-width: 960px;
+    max-height: 1000px;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.item {
+    margin: 5px;
+    color: white;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
