@@ -25,11 +25,18 @@
                 </div>
                 <div class="row">
                     <label for="formRowExampleInput">Content</label>
-                    <input type="text" name="content" class="form-control" placeholder="Enter content">
+                    <textarea rows="15" cols="50" name="content"  class="form-control" placeholder="Enter content">
+                        Enter content
+                    </textarea>
                 </div>
                 <div class="row">
                     <label for="formRowExampleInput">Type Tour</label>
-                    <input type="text" name="typetour" class="form-control" placeholder="Enter type tour">
+                    <select name="typetour" id="" class="form-control">
+                        @foreach($type_tour as $type_prds)
+                        <option value="{{ $type_prds->id }}">
+                            {{$type_prds->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -42,8 +49,24 @@
                     <input type="text" name="onsale" class="form-control" placeholder="Enter on sale">
                 </div>
                 <div class="row">
+                    <label for="formRowExampleInput">Departure Date</label>
+                    <input type="date" name="departure_date" class="form-control" placeholder="Enter departure date">
+                </div>
+                <div class="row">
+                    <label for="formRowExampleInput">Departure Time</label>
+                    <input type="time" name="departure_time" class="form-control" placeholder="Enter departure date">
+                </div>
+                <div class="row">
                     <label for="formRowExampleInput">Schedule</label>
                     <input type="text" name="schedule" class="form-control" placeholder="Enter schedule">
+                </div>
+                <div class="row">
+                    <label for="formRowExampleInput">Number people</label>
+                    <input type="text" name="number_people" class="form-control" placeholder="Enter number people">
+                </div>
+                <div class="row">
+                    <label for="formRowExampleInput">Start gate</label>
+                    <input type="text" name="start_gate" value="Đà Nẵng" class="form-control">
                 </div>
                 <div class="row">
                     <label for="formRowExampleInput">Image</label>

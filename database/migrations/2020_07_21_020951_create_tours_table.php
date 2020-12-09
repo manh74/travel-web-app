@@ -19,10 +19,15 @@ class CreateToursTable extends Migration
             $table->string('summarize',255);
             $table->longText('content');
             $table->string('image',255);
-            $table->bigInteger('id_type');
+            $table->unsignedBigInteger('id_type');
+            $table->foreign('id_type')->references('id')->on('type_tours')->onDelete('cascade');
             $table->string('price',255);
             $table->float('on_sale');
+            $table->date('departure_date');
+            $table->time('departure_time');
             $table->string('schedule',255);
+            $table->string('start_gate',255);
+            $table->bigInteger('number_people');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

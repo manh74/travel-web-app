@@ -156,7 +156,7 @@
                                                 {{number_format($prds->price)}}đ
                                             </b>
                                             <b style="color: red">
-                                                {{' '.number_format($prds->price - (($prds->price * $prds->on_sale)/100))}}đ
+                                                {{' '.number_format($prds->price - (($prds->price*$prds->on_sale)/100))}}đ
                                             </b>
                                             @else
                                                 <b style="color: red">
@@ -165,10 +165,17 @@
                                             @endif
                                         </span>
                                     </div>
-
                                     <div class="spacing">
-                                        <span><i class="ti-alarm-clock"></i>Lịch trình:</span>
+                                        <span><i class="ti-alarm-clock"></i>Khởi hành:</span>
+                                        <span>{{\Carbon\Carbon::createFromFormat('H:i:s',$prds->departure_time)->format('h:i')}}-{{ \Carbon\Carbon::parse($prds->departure_date)->format('d/m/Y')}}</span>
+                                    </div>
+                                    <div class="spacing">
+                                        <span><i class="fa fa-calendar"></i>Lịch trình:</span>
                                         <span>{{$prds->schedule}}</span>
+                                    </div>
+                                    <div class="spacing">
+                                        <span><i class="fa fa-user"></i>Số chỗ còn lại:</span>
+                                        <span>{{$prds->number_people}}</span>
                                     </div>
                                     <div class="spacing">
                                         <form class="form" action="{{route('delete-tour', $prds->id)}}" method="post">

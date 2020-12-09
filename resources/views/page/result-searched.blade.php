@@ -79,10 +79,17 @@
                                             @endif
                                         </span>
                                     </div>
-
                                     <div class="spacing">
-                                        <span><i class="ti-alarm-clock"></i>Lịch trình:</span>
+                                        <span><i class="ti-alarm-clock"></i>Khởi hành:</span>
+                                        <span>{{\Carbon\Carbon::createFromFormat('H:i:s',$prds->departure_time)->format('h:i')}}-{{ \Carbon\Carbon::parse($prds->departure_date)->format('d/m/Y')}}</span>
+                                    </div>
+                                    <div class="spacing">
+                                        <span><i class="fa fa-calendar"></i>Lịch trình:</span>
                                         <span>{{$prds->schedule}}</span>
+                                    </div>
+                                    <div class="spacing">
+                                        <span><i class="fa fa-user"></i>Số chỗ còn lại:</span>
+                                        <span>{{$prds->number_people}}</span>
                                     </div>
                                     <div class="spacing">
                                         <form class="form" action="{{route('add-to-favorite',$prds->id)}}" method="post">
@@ -90,7 +97,10 @@
                                             border: none;
                                             background: none;" type="submit"><i class=" ti-heart" style="color: red"></i><span>Yêu thích</span></button>
                                         </form>
-                                        <button type="button" class="btn btn-danger">BOOK NGAY</button>
+                                        <form class="form" action="{{route('bookTour',$prds->id)}}" method="get">
+											@csrf
+                                            <button type="submit" class="btn btn-danger">BOOK NGAY</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

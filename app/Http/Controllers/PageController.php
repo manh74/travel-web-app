@@ -16,6 +16,7 @@ use App\Book;
 use App\Customers;
 use App\Contact;
 use Session;
+use Carbon\Carbon;
 Illuminate\Support\Facades\Input::class;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,13 +26,28 @@ class PageController extends Controller
 
     public function getIndex(){
         $slide = Slides::all();
-        $last_tour = Tour::where('id_type',4)->paginate(3);
+        $last_tour = Tour::where('id_type',4)
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"));
+        })->paginate(3);
         $products = Tour::all();
         $type_products = TypeTour::all();
-        $featured_tour = Tour::where('id_type',2)->paginate(3);
-        $cheap_tour = Tour::where('id_type',1)->paginate(3);
-        $promotional_tour = Tour::where('id_type',3)->paginate(3);
-        $family_tour = Tour::where('id_type',5)->paginate(3);
+        $featured_tour = Tour::where('id_type',2)
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"));
+        })->paginate(3);
+        $cheap_tour = Tour::where('id_type',1)
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"));
+        })->paginate(3);
+        $promotional_tour = Tour::where('id_type',3)
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"));
+        })->paginate(3);
+        $family_tour = Tour::where('id_type',5)
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"));
+        })->paginate(3);
         return view('page.home', compact('slide','last_tour','products','type_products','cheap_tour','featured_tour','promotional_tour','family_tour'));
 
     }
@@ -56,7 +72,7 @@ class PageController extends Controller
         ->join('tours', 'bill_details.id_tour', '=', 'tours.id')
         ->join('bills', 'bill_details.id_bill', '=', 'bills.id')
         ->join('customers', 'bills.id_customer', '=', 'customers.id')
-        ->select('bill_details.id','bills.check_in', 'bills.check_out','tours.id as idTour', 'tours.title as titleTour','bill_details.price','bill_details.status','customers.quantity','customers.name', 'customers.email', 'customers.phone')
+        ->select('bill_details.id','tours.departure_time', 'tours.departure_date','tours.id as idTour', 'tours.schedule', 'tours.title as titleTour','bill_details.price','bill_details.status','customers.quantity','customers.name', 'customers.email', 'customers.phone')
         ->where('bill_details.id_user',Auth::user()->id)->orderBy('bill_details.created_at', 'DESC')
         ->get();
         return view('page.tour',compact('tours'));
@@ -118,7 +134,10 @@ class PageController extends Controller
     }
 
     public function getProductByType($type){
-        $products = Tour::where('id_type',$type)->get();
+        $products = Tour::where('id_type',$type)
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"));
+        })->get();
         $type_products = TypeTour::all();
         $best_tour_ordered = DB::table('tours')
         ->join('bill_details', 'bill_details.id_tour', '=', 'tours.id')
@@ -130,7 +149,7 @@ class PageController extends Controller
     }
 
     public function getProduct(){
-        $products = Tour::all();
+        $products = Tour::where('departure_date', '>', date("Y-m-d"))->get();
         $type_products = TypeTour::all();
         $best_tour_ordered = DB::table('tours')
         ->join('bill_details', 'bill_details.id_tour', '=', 'tours.id')
@@ -142,21 +161,45 @@ class PageController extends Controller
     }
 
     public function getProductByName(){
-        $products = Tour::orderBy('title', 'ASC')->get();
+        $products = Tour::orderBy('title', 'ASC')
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"));
+        })
+        ->get();
         $type_products = TypeTour::all();
         return view('page.product',compact('products','type_products'));
     }
 
     public function getProductByPrice(){
-        $products = Tour::orderBy('price', 'ASC')->get();
+        $products = Tour::orderBy('price', 'ASC')
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"));
+        })->get();
         $type_products = TypeTour::all();
-        return view('page.product',compact('products','type_products'));
+        $best_tour_ordered = DB::table('tours')
+        ->join('bill_details', 'bill_details.id_tour', '=', 'tours.id')
+        ->select('tours.*', DB::raw('COUNT(bill_details.id_tour) as tours'))
+        ->orderBy('tours', 'desc')
+        ->groupBy('tours.id')
+        ->get();
+        return view('page.product',compact('products','type_products','best_tour_ordered'));
     }
 
     public function getProductByOrderedALot(){
-        $products = Tour::orderBy('price', 'DESC')->get();
+        $products = DB::table('tours')
+        ->join('bill_details', 'bill_details.id_tour', '=', 'tours.id')
+        ->select('tours.*', DB::raw('COUNT(bill_details.id_tour) as tours'))
+        ->orderBy('tours', 'desc')
+        ->groupBy('tours.id')
+        ->get();
         $type_products = TypeTour::all();
-        return view('page.product',compact('products','type_products'));
+        $best_tour_ordered = DB::table('tours')
+        ->join('bill_details', 'bill_details.id_tour', '=', 'tours.id')
+        ->select('tours.*', DB::raw('COUNT(bill_details.id_tour) as tours'))
+        ->orderBy('tours', 'desc')
+        ->groupBy('tours.id')
+        ->get();
+        return view('page.product',compact('products','type_products','best_tour_ordered'));
     }
 
     public function getProductById($id){
@@ -202,6 +245,15 @@ class PageController extends Controller
         BillDetail::where('id', $id)->update([
            'status' => 'Hủy'
         ]);
+
+        $bill_detail = BillDetail::where('id',$id)->firstOrFail();
+        $tour = Tour::where('id',$bill_detail->id_tour)->firstOrFail();
+
+        Tour::where('id', $tour->id)->update([
+            'number_people' => $bill_detail->quantity + $tour->number_people
+         ]);
+
+
         return redirect()->back();
     }
 
@@ -209,7 +261,11 @@ class PageController extends Controller
     public function getProductBySearch(Request $request){
         $type_products = TypeTour::all();
         $search = $request->input('search');
-        $products = Tour::where('title', 'LIKE', '%'.$search.'%')->paginate(4);
+        $products = Tour::where('title', 'LIKE', '%'.$search.'%')
+        ->where(function($query) {
+            $query->where('departure_date', '>', date("Y-m-d"))
+            ->where('number_people', '>', 0);
+        })->paginate(4);
         Session::put('search',$search);
         return view('page.result-searched', compact('products','type_products'));
     }
@@ -291,7 +347,7 @@ class PageController extends Controller
             ->join('tours', 'bill_details.id_tour', '=', 'tours.id')
             ->join('bills', 'bill_details.id_bill', '=', 'bills.id')
             ->join('customers', 'bills.id_customer', '=', 'customers.id')
-            ->select('bill_details.id', 'bills.check_in', 'bills.check_out', 'tours.id as idTour', 'tours.title as titleTour','bill_details.price','bill_details.status','customers.quantity','customers.name', 'customers.email', 'customers.phone')
+            ->select('bill_details.id','tours.departure_time', 'tours.departure_date','tours.id as idTour', 'tours.schedule', 'tours.title as titleTour','bill_details.price','bill_details.status','customers.quantity','customers.name', 'customers.email', 'customers.phone')
             ->orderBy('bill_details.created_at', 'DESC')
             ->get();
             return view('page.tour-ordered',compact('tours'));
@@ -301,24 +357,19 @@ class PageController extends Controller
     }
 
     public function postBookTour(Request $req, $id){
+        $tour = Tour::where('id',$id)->firstOrFail();
         $todayDate = date('m/d/Y');
         $this->validate($req, [
-
-            'start_date'  => 'required|after:yesterday',
-            'end_date'    => 'required|after:start_date',
-            'name'  => 'required',
-            'email'        => 'required|email',
-            'phone'        => 'required',
-            'qty'     => 'required|integer|min:1|max:200'
+            'name'    => 'required',
+            'email'   => 'required|email',
+            'phone'   => 'required|numeric',
+            'qty'     => 'required|integer|min:1|max: 200'
 
         ],
         [
-            'end_date.required' => 'Chọn ngày đi về không hợp lệ. Chỉ có thể quay về sau ngày đi!',
-            'end_date.after' => 'Chọn ngày đi về không hợp lệ. Chỉ có thể quay về sau ngày đi!',
-            'start_date.required' => 'Chọn ngày đi không hợp lệ. Chỉ có thể đi từ hôm nay!',
-            'start_date.after' => 'Chọn ngày đi không hợp lệ. Chỉ có thể đi từ hôm nay!',
             'name.required' => 'Vui lòng nhập tên của người đi!',
             'phone.required' => 'Vui lòng nhập số điện thoại!',
+            'phone.numeric' => "Vui lòng nhập đúng định dạng số điện thoại!",
             'email.required' => 'Vui lòng nhập email của người đi để nhận vé trực tuyến!',
             'qty.required' => 'Vui lòng nhập số lượng khách đi!',
             'qty.integer' => 'Chỉ có thể nhập bằng số!',
@@ -337,8 +388,6 @@ class PageController extends Controller
 
         $bill = new Bill;
         $bill->id_customer = $customer->id;
-        $bill->check_in = $req->start_date;
-        $bill->check_out = $req->end_date;
         $bill->note = $req->note;
         $bill->total = $req->total;
         $bill->save();
@@ -353,7 +402,11 @@ class PageController extends Controller
         $bill_detail->status = "Đang chờ cuộc gọi xác nhận và vé";
         $bill_detail->save();
 
-        return redirect()->back()->with('thongbao','Book tour thành công. Chúng tôi sẽ liên hệ với bạn sớm nhất nếu có thể');
+        $tour = Tour::where('id',$id)->firstOrFail();
+        Tour::where('id', $id)->update([
+            'number_people' => $tour->number_people - $req->qty
+         ]);
 
-}
+            return redirect()->back()->with('thongbao','Book tour thành công. Chúng tôi sẽ liên hệ với bạn sớm nhất nếu có thể');
+        }
 }

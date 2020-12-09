@@ -121,7 +121,7 @@
                                                 <a href="{{ url('/') }}">TRANG CHỦ</a></li>
                                             <li class="{{ Request::is('about-us') ? 'active' : '' }}"><a href="{{ url('/about-us') }}">GIỚI THIỆU</a></li>
                                             <li class="{{ Request::is('news') || Request::is('news/*') ? 'active' : '' }}"><a href="{{ url('/news') }}">TIN TỨC</a></li>
-                                            <li class="{{  Request::is('product*')? 'active' : '' }}"><a href="{{ url('/products') }}">SẢN PHẨM</a>
+                                            <li class="{{  Request::is('product*')? 'active' : '' }}"><a href="{{ url('/products') }}">TOUR</a>
                                             </li>
 
                                             <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="{{ url('/contact') }}">LIÊN HỆ</a></li>

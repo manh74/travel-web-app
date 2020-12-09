@@ -40,8 +40,8 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">SĐT</th>
                                 <th scope="col">Tour</th>
-                                <th scope="col">Ngày đi</th>
-                                <th scope="col">Ngày về</th>
+                                <th scope="col">Lịch trình</th>
+                                <th scope="col">Khởi hành</th>
                                 <th scope="col">SL</th>
                                 <th scope="col">Đơn giá</th>
                                 <th scope="col">Trạng thái</th>
@@ -55,8 +55,8 @@
                                 <td>{{ $tour->email }}</td>
                                 <td>{{ $tour->phone }}</td>
                                 <td>{{ $tour->titleTour }}</td>
-                                <td>{{ \Carbon\Carbon::parse($tour->check_in)->format('d/m/Y')}}</td>
-                                <td>{{ \Carbon\Carbon::parse($tour->check_out)->format('d/m/Y')}}</td>
+                                <td>{{  $tour->schedule }}</td>
+                                <td>{{\Carbon\Carbon::createFromFormat('H:i:s',$tour->departure_time)->format('h:i')}}{{ " " }}{{ \Carbon\Carbon::parse($tour->departure_date)->format('d/m/Y')}}</td>
                                 <td>{{ $tour->quantity }}</td>
                                 <td>{{ number_format($tour->price) }}VNĐ</td>
                                 <td>{{ $tour->status }}</td>

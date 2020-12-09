@@ -40,6 +40,10 @@ class ToursTableSeeder extends Seeder
             'id_type' => 1,
             'price' => "3000000",
             'on_sale' => 0,
+            'departure_date' => '2020-09-08',
+            'departure_time' => '05:30',
+            'start_gate' => 'Đà Nẵng',
+            'number_people' => '20',
             'schedule' => "7N6D"
         ]);
 
@@ -72,6 +76,10 @@ class ToursTableSeeder extends Seeder
             'id_type' => 1,
             'price' => "3000000",
             'on_sale' => 0,
+            'departure_date' => '2020-10-20',
+            'departure_time' => '06:30',
+            'start_gate' => 'Đà Nẵng',
+            'number_people' => '20',
             'schedule' => "7N6D"
         ]);
 
@@ -136,7 +144,11 @@ class ToursTableSeeder extends Seeder
             'id_type' => 3,
             'price' => "3000000",
             'on_sale' => 0,
-            'schedule' => "7N6D"
+            'departure_date' => '2020-10-15',
+            'departure_time' => '05:30',
+            'start_gate' => 'Đà Nẵng',
+            'number_people' => '20',
+            'schedule' => "6N6D"
         ]);
     }
 }

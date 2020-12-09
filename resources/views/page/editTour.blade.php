@@ -24,7 +24,9 @@
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput">Content</label>
-                <input type="text" name="content" value="{!! $tour['content']!!}" class="form-control" placeholder="">
+                <textarea rows="15" cols="50" name="content" value="{!! $tour['content']!!}" class="form-control" placeholder="">
+                    {!! $tour['content']!!}
+                </textarea>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput">Type Tour</label>
@@ -47,8 +49,24 @@
                 <input type="text" name="onsale" value="{!! $tour['on_sale']!!}" class="form-control" placeholder="">
             </div>
             <div class="form-group">
+                <label for="formGroupExampleInput2">Departure Date</label>
+                <input type="date" name="departure_date" value="{!! \Carbon\Carbon::parse($tour->departure_date)->format('d/m/Y') !!}" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Departure Time</label>
+                <input type="text" name="departure_time" value="{!! \Carbon\Carbon::createFromFormat('H:i:s',$tour->departure_time)->format('h:i')!!}" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
                 <label for="formGroupExampleInput2">Schedule</label>
                 <input type="text" name="schedule" value="{!! $tour['schedule']!!}" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Number people</label>
+                <input type="text" name="number_people" value="{!! $tour['number_people']!!}" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Start gate</label>
+                <input type="text" name="start_gate" value="{!! $tour['start_gate']!!}" class="form-control" placeholder="">
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Image</label>

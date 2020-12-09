@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <head>
-    <title>Chi tiết sản phẩm</title>
+    <title>Chi tiết tour</title>
 </head>
 
 <div class="breadcrumbs">
@@ -11,7 +11,7 @@
                 <div class="bread-inner">
                     <ul class="bread-list">
                         <li><a href="{{ url('/') }}">TRANG CHỦ<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="{{ url('/products') }}">TOUR<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="{{ url('/products') }}">CHI TIẾT TOUR<i class="ti-arrow-right"></i></a></li>
                         <li class="active">
                             @foreach($products as $prds)
                              <a href="{{ url('/products') }}">{{$prds->title}}</a>
@@ -108,10 +108,22 @@
                                 @endif
 
 
-                            <div class="spacing">
-                                <h5><i class="ti-alarm-clock"></i>Lịch trình:</h5>
-                                <span>{{$prds->schedule}}</span>
-                            </div>
+                                <div class="spacing">
+                                    <span><i class="ti-alarm-clock"></i>Khởi hành:</span>
+                                    <span>{{\Carbon\Carbon::createFromFormat('H:i:s',$prds->departure_time)->format('h:i')}}-{{ \Carbon\Carbon::parse($prds->departure_date)->format('d/m/Y')}}</span>
+                                </div>
+                                <div class="spacing">
+                                    <span><i class="fa fa-calendar"></i>Lịch trình:</span>
+                                    <span>{{$prds->schedule}}</span>
+                                </div>
+                                <div class="spacing">
+                                    <span><i class="fa fa-user"></i>Số chỗ còn lại:</span>
+                                    <span>{{$prds->number_people}}</span>
+                                </div>
+                                <div class="spacing">
+                                    <span><i class="fa fa-map-marker"></i>Nơi khởi hành:</span>
+                                    <span>{{$prds->start_gate}}</span>
+                                </div>
 
 
                         </div>

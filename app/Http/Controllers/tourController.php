@@ -70,6 +70,7 @@ class tourController extends Controller
     }
 
     function getAddTour(){
+        $type_tour = TypeTour::all();
         return view('page/addTour', compact('type_tour'));
     }
 
@@ -139,12 +140,16 @@ class tourController extends Controller
                 $tours->id_type = $request->input('typetour');
                 $tours->price = $request->input('price');
                 $tours->on_sale = $request->input('onsale');
+                $tours->departure_date = $request->input('departure_date');
+                $tours->departure_time = $request->input('departure_time');
+                $tours->start_gate = $request->input('start_gate');
+                $tours->number_people = $request->input('number_people');
                 $tours->schedule = $request->input('schedule');
                 $tours->save();
                 return $this->getList1()->with('alert', 'Đã thêm tour thành công!');
             }
             else
-                return redirect()->back()->with('alert', 'Vui lòng đăng nhập vào tài khoản admintrước khi thực hiện chức năng này!');
+                return redirect()->back()->with('alert', 'Vui lòng đăng nhập vào tài khoản admin trước khi thực hiện chức năng này!');
             }
             else
                 return redirect()->back()->with('alert', 'Vui lòng đăng nhập vào tài khoản admin trước khi thực hiện chức năng này!');
@@ -168,6 +173,11 @@ class tourController extends Controller
         $tours->id_type = $req->input('typetour');
         $tours->price = $req->input('price');
         $tours->on_sale = $req->input('onsale');
+        $tours->schedule = $req->input('schedule');
+        $tours->departure_date = $req->input('departure_date');
+        $tours->number_people = $req->input('number_people');
+        $tours->departure_time = $req->input('departure_time');
+        $tours->start_gate = $req->input('start_gate');
         $tours->schedule = $req->input('schedule');
         $tours->save();
         return $this->getTour()->with('alert', 'Đã chỉnh sửa tour thành công!');;

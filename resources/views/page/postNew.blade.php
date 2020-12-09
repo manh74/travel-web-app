@@ -22,21 +22,18 @@
                 <div class="row">
                     <label for="formRowExampleInput">Summarize</label>
                     <input type="text" name="summarize" class="form-control" placeholder="Enter summarize">
-                </div> 
+                </div>
                 <div class="row">
                     <label for="formRowExampleInput">Content</label>
-                    <input type="text" name="content" class="form-control" placeholder="Enter content">
-                </div> 
-                <div class="row">
-                    <label for="formRowExampleInput">View Number</label>
-                    <input type="text" name="view_number" class="form-control" placeholder="Enter view number">
+                    <textarea rows="15" cols="50" name="content"  class="form-control" placeholder="Enter content">
+                    </textarea>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="row">
                     <label for="formRowExampleInput">Image</label>
                     <input type="file" name="image" class="form-control" placeholder="">
-                </div> 
+                </div>
             </div>
             <div>
 				@include ('blocks.error')

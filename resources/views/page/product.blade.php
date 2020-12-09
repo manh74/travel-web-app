@@ -2,7 +2,7 @@
 @section('content')
 @include('blocks.alert')
 <head>
-    <title>Sản phẩm</title>
+    <title>Tour</title>
 </head>
 
 <div class="breadcrumbs">
@@ -12,7 +12,7 @@
                 <div class="bread-inner">
                     <ul class="bread-list">
                         <li><a href="{{ url('/') }}">TRANG CHỦ<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="{{ url('/products') }}">SẢN PHẨM</a></li>
+                        <li class="active"><a href="{{ url('/products') }}">TOUR</a></li>
                     </ul>
                 </div>
             </div>
@@ -25,9 +25,8 @@
         <div class="row">
             <div class="col-lg-3 col-md-4 col-12">
                 <div class="shop-sidebar">
-
                         <div class="single-widget category">
-                            <h3 class="title">TẤT CẢ SẢN PHẨM</h3>
+                            <h3 class="title">TẤT CẢ CÁC TOUR</h3>
                             <ul class="categor-list">
                                 @foreach($type_products as $type_prds)
                                 <li><a href="{{route('type-product',$type_prds->id)}}">{{$type_prds->name}}</a></li>
@@ -137,10 +136,17 @@
                                             @endif
                                         </span>
                                     </div>
-
                                     <div class="spacing">
-                                        <span><i class="ti-alarm-clock"></i>Lịch trình:</span>
+                                        <span><i class="ti-alarm-clock"></i>Khởi hành:</span>
+                                        <span>{{\Carbon\Carbon::createFromFormat('H:i:s',$prds->departure_time)->format('h:i')}}-{{ \Carbon\Carbon::parse($prds->departure_date)->format('d/m/Y')}}</span>
+                                    </div>
+                                    <div class="spacing">
+                                        <span><i class="fa fa-calendar"></i>Lịch trình:</span>
                                         <span>{{$prds->schedule}}</span>
+                                    </div>
+                                    <div class="spacing">
+                                        <span><i class="fa fa-user"></i>Số chỗ còn lại:</span>
+                                        <span>{{$prds->number_people}}</span>
                                     </div>
                                     <div class="spacing">
                                         <form class="form" action="{{route('add-to-favorite',$prds->id)}}" method="post">

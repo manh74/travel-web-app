@@ -34,40 +34,22 @@
         <h4 style="margin-left:45%;font-size:50px,color:#ffc001;">Tour của bạn</h4>
         </span>
         </div>
-                               
+
         <div>
 
-            <form action="" method="post" class="beta-form-checkout">
+            <form name="myForm" action="" method="post" class="beta-form-checkout" onsubmit="return validateForm()">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="row">@if(Session::has('thongbao')){{Session::get('thongbao')}}@endif</div>
                 <div class="row">
                     <div class="col-md-6">
 
                         <div class="space20">&nbsp;</div>
-                        <div class="form-block">
-                            <label for="name">Check In*</label>
-                            <p @error('start_date') class="error" @enderror>
-                                <input class="form-control" name="start_date" type="date" required>
-                                @error('start_date')
-                                {{ $message }}
-                                @enderror
-                            </p>
-                        </div>
-                        <div class="form-block">
-                            <label for="name">Check Out*</label>
-                            <p @error('end_date') class="error" @enderror>
-                                <input class="form-control" name="end_date" type="date" required>
-                                @error('end_date')
-                                {{ $message }}
-                                @enderror
-                            </p>
-                        </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <span class="form-label">Name*</span>
                                     <p @error('name') class="error" @enderror>
-                                        <input class="form-control" type="text" name="name"
+                                        <input class="form-control" type="text" name="name" value="{{ Auth::user()->name }}"
                                             placeholder="Enter your name">
                                         @error('name')
                                         {{ $message }}
@@ -79,7 +61,7 @@
                                 <div class="form-group">
                                     <span class="form-label">Email*</span>
                                     <p @error('email') class="error" @enderror>
-                                        <input class="form-control" type="text" name="email"
+                                        <input class="form-control" type="text" name="email" value="{{ Auth::user()->email }}"
                                             placeholder="Enter your email">
                                         @error('email')
                                         {{ $message }}
@@ -123,7 +105,6 @@
                     <div class="row"style="margin-left:15px">
                         <div class="col-sm-6">
                             <div class="your-order">
-                                
                                 <br />
                                 <div class="your-order-body" style="padding: 0px 10px">
                                     <div class="your-order-item">
@@ -154,12 +135,18 @@
                                             var a = inputElement.value;
                                             var target = document.getElementById('sum');
                                             if (target != null) {
-                                                target.innerHTML = a * {{$tours -> price }} + "VNĐ";
+                                                target.innerHTML = (a * {{$tours -> price }}) + "VNĐ";
                                             }
-                                            document.getElementById("sum1").value = a * {{ $tours -> price}};
-                                            
+                                            document.getElementById("sum1").value =  a * {{ $tours -> price}};
                                         }
-                                        
+                                        function validateForm() {
+                                            var x = document.forms["myForm"]["qty"].value;
+                                            if (x > {{$tours->number_people}}) {
+                                                alert("Vui lòng nhập số lượng nhỏ hơn số lượng khách còn lại có thể đặt trước.");
+                                                return false;
+                                            }
+                                        }
+
                                         </script>
                                     </div>
                                     <div class="your-order-item">
@@ -171,13 +158,13 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
-                           
+
                         </div> <!-- .your-order -->
-                   
-                  
-                    
-                    </div> 
-                   
+
+
+
+                    </div>
+
                 </div>
                 <button type="submit" class="btn btn-success"style="margin-left:60%">Book Now</button>
             </form>

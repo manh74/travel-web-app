@@ -29,9 +29,10 @@
                 <br>
                 <img src="{{ URL::asset('images/infors/about.png') }}" style="width: 75%; margin-left: 100px;">
                 <div class="space10">&nbsp;</div>
-                <h5>Với đội ngũ hơn 100 nhân sự trẻ trung, năng động và nhiệt huyết, Enjoy Travel hiện đã xuất hiện tại khắp mọi miền Tổ quốc, trên các tỉnh thành như: Hà Nội, thành phố Hồ Chí Minh, Đà Nẵng, Tuyên Quang, Thanh Hóa, Bắc Ninh, Quảng Ninh và Bắc Kạn. Không chỉ dừng lại ở đó, EnjoyTravel đang tiếp tục mở rộng các đại lý bán nhằm tạo điều kiện thuận lợi nhất cho khách hàng trong giao dịch và tư vấn các dịch vụ, tour tuyến một cách tốt nhất và chu đáo nhất.<h5>
+                <h5>Với đội ngũ hơn 100 nhân sự trẻ trung, năng động và nhiệt huyết, Enjoy Travel hiện đã đưa các khách hàng đến khắp mọi miền Tổ quốc, trên các tỉnh thành như: Hà Nội, thành phố Hồ Chí Minh, Đà Nẵng, Tuyên Quang, Thanh Hóa, Bắc Ninh, Quảng Ninh và Bắc Kạn. Không chỉ dừng lại ở đó, EnjoyTravel đang tiếp tục mở rộng các đại lý bán nhằm tạo điều kiện thuận lợi nhất cho khách hàng trong giao dịch và tư vấn các dịch vụ, tour tuyến một cách tốt nhất và chu đáo nhất.<h5>
                 <div class="space10">&nbsp;</div>
                 <h5>Chất lượng dịch vụ là tiêu chuẩn được chúng tôi đặt lên hàng đầu để phục vụ khách tốt nhất. Chúng tôi hiểu rằng, mỗi chuyến đi du khách đều mong được gửi gắm vào đó những niềm vui, trải nghiệm, khám phá miền đất mới, kiến thức mới đồng thời lưu giữ những bức hình đẹp. Bởi vậy sứ mệnh đặt ra đối với chúng tôi chính là mang đến cho mỗi hành trình những dịch vụ đạt chuẩn, những khám phá mới nhất cho từng du khách và luôn là “sự lựa chọn tin cậy” cho khách hàng như khẩu hiệu của EnjoyTravel.</h5>
+                <h5><strong>Lưu ý:</strong> Hiện tại Enjoy Travel chỉ hoạt động xuất ở thành phố Đà Nẵng. Nếu khách hàng có nhu cầu hãy xuất phát từ thành phố Đà Nẵng.</h5>
             </div>
             <div class="col-sm-4">
                 <img src="{{ URL::asset('images/infors/about1.jpg') }}" width="400px;">

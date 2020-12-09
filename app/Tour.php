@@ -8,7 +8,7 @@ class Tour extends Model
 {
     protected $table = "tours";
     protected $fillable = [
-        'id', 'title', 'summarize', 'content', 'image', 'id_type', 'price', 'on_sale', 'schedule'
+        'id', 'title', 'summarize', 'content', 'image', 'id_type', 'price', 'on_sale', 'schedule','departure_date','departure_time','start_gate'
     ];
 
     public function tour_type(){
